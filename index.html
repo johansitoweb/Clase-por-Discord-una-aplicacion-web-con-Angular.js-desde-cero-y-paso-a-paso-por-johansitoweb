@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clínica Odontológica</title>
+  <!--johansitoweb-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="clinicApp" ng-controller="clinicController">
+    <div class="container">
+        <h2 class="text-center mt-4">Gestión de Clínica Odontológica</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Agregar Paciente</h4>
+                <form ng-submit="addPatient()">
+                    <div class="form-group">
+                        <label for="patientName">Nombre del Paciente:</label>
+                        <input type="text" class="form-control" id="patientName" ng-model="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientAge">Edad:</label>
+                        <input type="number" class="form-control" id="patientAge" ng-model="patientAge" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <h4>Lista de Pacientes</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Paciente</th>
+                            <th>Edad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="patient in patients">
+                            <td>{{ patient.name }}</td>
+                            <td>{{ patient.age }}</td>
+                            <td>
+                                <button class="btn btn-danger" ng-click="deletePatient(patient)">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Registrar Cita</h4>
+                <form ng-submit="addAppointment()">
+                    <div class="form-group">
+                        <label for="appointmentPatient">Paciente:</label>
+                        <select class="form-control" id="appointmentPatient" ng-model="appointmentPatient" ng-options="patient.name for patient in patients" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentDate">Fecha:</label>
+                        <input type="date" class="form-control" id="appointmentDate" ng-model="appointmentDate" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <h4>Lista de Citas</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="appointment in appointments">
+                            <td>{{ appointment.patient.name }}</td>
+                            <td>{{ appointment.date | date:'dd/MM/yyyy' }}</td>
+                            <td>
+                                <button class="btn btn-danger" ng-click="deleteAppointment(appointment)">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
